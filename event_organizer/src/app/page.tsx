@@ -1,8 +1,12 @@
-import Image from "next/image";
+
+import Sidebar from '../sidebar';
 
 export default function Home() {
-  return (
-   <div>  
-    </div>
+  return(
+    <main className="min-h-screen overflow-hidden">
+     
+      <Sidebar/>
+
+    </main>
   );
 }
