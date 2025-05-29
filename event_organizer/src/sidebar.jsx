@@ -10,7 +10,7 @@ const Layout = () => {
     return (
         <div className="flex h-screen bg-gray-50 ">
             {/* Sidebar */}
-            <div className="md:w-[215px] w-20 border border-gray-100 shadow-lg flex flex-col md:p-6 py-6 justify-between md:items-stretch items-center bg-blue-400 text-white min-h-screen overflow-hidden">
+            <div className="md:w-[240px] w-20 border border-gray-100 shadow-lg flex flex-col md:p-6 py-6 justify-between md:items-stretch items-center bg-blue-400 text-white min-h-screen overflow-hidden">
                 
                 {/* Logo/Brand Section */}
                 <div className="mb-8">
