@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { ArrowLeft, Calendar, Clock, MapPin, Users, Music, Utensils, BookOpen } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const CreateEventForm = () => {
   const [eventName, setEventName] = useState('Tech Innovation Summit 2025');
@@ -11,6 +12,8 @@ const CreateEventForm = () => {
   const [duration, setDuration] = useState('8 hours');
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('17:00');
+
+  const router = useRouter();
 
   const eventTypes = [
     { id: 'virtual', label: 'Virtual Event', icon: <Users className="w-4 h-4" /> },
@@ -188,13 +191,19 @@ const CreateEventForm = () => {
           <button className="px-6 py-3 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200 backdrop-blur-sm">
             Cancel
           </button>
-          <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-200 transform hover:scale-105">
-            Create Event
-          </button>
+        
+
+<button
+  onClick={() => router.push('/')}
+  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-200 transform hover:scale-105"
+>
+  Create Event
+</button>
+
         </div>
       </div>
     </div>
   );
 };
 
-export default CreateEventForm;
+export default CreateEventForm; 

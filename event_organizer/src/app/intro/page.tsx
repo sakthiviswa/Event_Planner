@@ -1,14 +1,24 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Star, Users, Shield, Zap, MessageCircle, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+
 
 const EventTicketingLanding = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('venues');
 
+  const router = useRouter();
+ 
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+ 
+
 
   const features = [
     {
@@ -66,9 +76,12 @@ const EventTicketingLanding = () => {
           <a href="#" className="text-gray-300 hover:text-white transition-colors">Documentation</a>
           <a href="#" className="text-gray-300 hover:text-white transition-colors">Pricing</a>
           <a href="#" className="text-gray-300 hover:text-white transition-colors">GitHub</a>
-          <button className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-2 rounded-full hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+          <Link href="/login">
+          <button className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-2 rounded-full hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105"
+          >
             Login
           </button>
+          </Link>
         </nav>
       </header>
 
@@ -98,7 +111,9 @@ const EventTicketingLanding = () => {
             <ChevronRight className="w-4 h-4 text-blue-400" />
           </div>
 
-          <button className="bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-4 rounded-full text-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-purple-500/25 mb-12">
+          <button className="bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-4 rounded-full text-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-purple-500/25 mb-12"
+          onClick={() => router.push('/createevent')}
+          >
             Create Your Event Now
             <ChevronRight className="inline w-5 h-5 ml-2" />
           </button>
