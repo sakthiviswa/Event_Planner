@@ -16,13 +16,13 @@ const Layout = () => {
             case 'getstarted':
                 return <Getstarted />;
             case 'dashboard':
-                return <SetUpEvent/>;
+                return <Dashboard/>;
             case 'settings':
-                return <Add_tickets />;
+                return <Settings />;
             case 'add_tickets':
                 return <Add_tickets />;
             case 'setup_event':
-                return <SetUpEvent />;
+                return <SetUpEvent onBack={() => {}} onProductCreated={() => {}} />;
             default:
                 return <Dashboard />;
         }

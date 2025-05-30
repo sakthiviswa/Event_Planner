@@ -1,26 +1,8 @@
+'use client';
+import React, { useState } from 'react';
+import { Ticket, Package } from 'lucide-react';
 
-import React, { useState, useMemo } from 'react';
-import { Search, Plus, MoreHorizontal, Ticket, Trash2, Edit, Package } from 'lucide-react';
-
-// Ticket type
-type TicketType = {
-  id: string | number;
-  title: string;
-  description?: string;
-  status: string;
-  price: string | number;
-  quantitySold: number;
-  quantityAvailable?: number;
-  category?: string;
-};
-
-// Create Product Component
-interface CreateProductProps {
-  onBack: () => void;
-  onProductCreated: (product: TicketType) => void;
-}
-
-const CreateProduct: React.FC<CreateProductProps> = ({ onBack, onProductCreated }) => {
+export default function CreateProductPage() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -40,59 +22,16 @@ const CreateProduct: React.FC<CreateProductProps> = ({ onBack, onProductCreated 
   };
 
   const handleSubmit = () => {
-    // Validate form data
-    if (!formData.name || !formData.price || !formData.quantityAvailable) {
-      alert('Please fill in all required fields');
-      return;
-    }
-
-    // Create new product object
-    const newProduct: TicketType = {
-      id: Date.now(),
-      title: formData.name,
-      status: 'ON SALE',
-      price: `$${parseFloat(formData.price).toFixed(2)}`,
-      quantitySold: 0,
-      description: formData.description,
-      category: formData.productCategory,
-      quantityAvailable: parseInt(formData.quantityAvailable)
-    };
-
-    console.log('Product created:', newProduct);
-
-    // Call the callback to add product to the list
-    onProductCreated(newProduct);
-
-    // Reset form
-    setFormData({
-      name: '',
-      description: '',
-      productCategory: 'Tickets',
-      price: '',
-      quantityAvailable: ''
-    });
-
+    console.log('Product created:', formData);
+    // Handle form submission here
     alert('Product created successfully!');
-
-    // Go back to tickets page
-    onBack();
   };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-2xl mx-auto">
-        {/* Header with Back Button */}
-        <div className="flex items-center mb-8">
-          <button
-            onClick={onBack}
-            className="mr-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="text-3xl font-bold text-blue-500">Create Product</h1>
-        </div>
+        {/* Header */}
+        <h1 className="text-3xl font-bold text-blue-500 mb-8">Create Product</h1>
 
         <div className="space-y-6">
           {/* Product Type Section */}
@@ -129,7 +68,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({ onBack, onProductCreated 
             {/* Name Field */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Name *
+                Name
               </label>
               <input
                 type="text"
@@ -139,7 +78,6 @@ const CreateProduct: React.FC<CreateProductProps> = ({ onBack, onProductCreated 
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter product name"
-                required
               />
             </div>
 
@@ -182,7 +120,7 @@ const CreateProduct: React.FC<CreateProductProps> = ({ onBack, onProductCreated 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
-                  Price *
+                  Price
                 </label>
                 <input
                   type="number"
@@ -194,13 +132,12 @@ const CreateProduct: React.FC<CreateProductProps> = ({ onBack, onProductCreated 
                   min="0"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="0.00"
-                  required
                 />
               </div>
 
               <div>
                 <label htmlFor="quantityAvailable" className="block text-sm font-medium text-gray-700 mb-1">
-                  Quantity Available *
+                  Quantity Available
                 </label>
                 <input
                   type="number"
@@ -208,33 +145,23 @@ const CreateProduct: React.FC<CreateProductProps> = ({ onBack, onProductCreated 
                   name="quantityAvailable"
                   value={formData.quantityAvailable}
                   onChange={handleInputChange}
-                  min="1"
+                  min="0"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter quantity"
-                  required
                 />
               </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4">
-            <button
-              onClick={onBack}
-              className="flex-1 bg-gray-200 text-gray-700 py-3 px-4 rounded-md hover:bg-gray-300 transition-colors font-medium text-lg"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="flex-1 bg-blue-500 text-white py-3 px-4 rounded-md hover:bg-blue-600 transition-colors font-medium text-lg"
-            >
-              Create Product
-            </button>
-          </div>
+          {/* Submit Button */}
+          <button
+            onClick={handleSubmit}
+            className="w-full bg-blue-500 text-white py-3 px-4 rounded-md hover:bg-blue-600 transition-colors font-medium text-lg"
+          >
+            Create Product
+          </button>
         </div>
       </div>
     </div>
   );
-};
-export default CreateProduct;
+}
