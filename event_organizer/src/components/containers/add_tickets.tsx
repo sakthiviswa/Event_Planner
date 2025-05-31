@@ -20,8 +20,8 @@ interface AddTicketsProps {
 }
 
 
-const Add_tickets: React.FC<AddTicketsProps> = ({ 
-  tickets, 
+const Add_tickets: React.FC<AddTicketsProps> = ({
+  tickets,
   onDeleteTicket,
   onEditTicket,
   onCreateClick
@@ -34,7 +34,7 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
   // Filter tickets based on search term
   const filteredTickets = useMemo(() => {
     if (!searchTerm.trim()) return tickets;
-    
+
     return tickets.filter(ticket =>
       ticket.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (ticket.description && ticket.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -77,7 +77,7 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
     const handleClickOutside = () => {
       setShowMoreOptions(null);
     };
-    
+
     if (showMoreOptions) {
       document.addEventListener('click', handleClickOutside);
       return () => document.removeEventListener('click', handleClickOutside);
@@ -85,29 +85,30 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
   }, [showMoreOptions]);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-slate-900 p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-6">
+          <h1 className="text-2xl font-semibold text-slate-100 mb-6">
             Tickets & Products
           </h1>
 
           {/* Search and Create Section */}
           <div className="flex items-center justify-between mb-6">
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search Products"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100 placeholder-slate-400"
               />
             </div>
+
             <button
               onClick={onCreateClick}
-              className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2 font-medium"
+              className="ml-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 font-medium"
             >
               <Plus className="w-4 h-4" />
               Create
@@ -116,9 +117,9 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
 
           {/* Search Results Info */}
           {searchTerm && (
-            <div className="mb-4 text-sm text-gray-600">
-              {filteredTickets.length === 0 
-                ? `No tickets found for "${searchTerm}"` 
+            <div className="mb-4 text-sm text-slate-400">
+              {filteredTickets.length === 0
+                ? `No tickets found for "${searchTerm}"`
                 : `Found ${filteredTickets.length} ticket${filteredTickets.length === 1 ? '' : 's'} for "${searchTerm}"`
               }
             </div>
@@ -126,13 +127,15 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
         </div>
 
         {/* Tickets Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-medium text-gray-900">Tickets</h2>
+        <div className="bg-slate-800 rounded-lg shadow-xl border border-slate-700">
+          <div className="p-6 border-b border-slate-700">
+            <h2 className="text-lg font-medium text-slate-100">Tickets</h2>
           </div>
 
+
           {/* Table Header */}
-          <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 text-sm font-medium text-gray-700 uppercase tracking-wide">
+          {/* Table Header */}
+          <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-750 text-sm font-medium text-slate-300 uppercase tracking-wide">
             <div className="col-span-4">Title</div>
             <div className="col-span-2">Status</div>
             <div className="col-span-2">Price</div>
@@ -141,98 +144,104 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
           </div>
 
           {/* Table Body */}
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-slate-700">
             {filteredTickets.length === 0 ? (
-              <div className="px-6 py-8 text-center">
-                <div className="text-gray-400 mb-2">
+              < div className="px-6 py-8 text-center">
+                <div className="text-slate-500 mb-2">
                   <Ticket className="w-12 h-12 mx-auto" />
                 </div>
+
                 {searchTerm ? (
                   <>
-                    <p className="text-gray-500 text-sm">No tickets match your search</p>
-                    <p className="text-gray-400 text-xs">Try adjusting your search terms</p>
+                    <p className="text-slate-400 text-sm">No tickets match your search</p>
+                    <p className="text-slate-500 text-xs">Try adjusting your search terms</p>
+
                   </>
                 ) : (
                   <>
-                    <p className="text-gray-500 text-sm">No tickets created yet</p>
-                    <p className="text-gray-400 text-xs">Click "Create" to add your first ticket</p>
+                    <p className="text-slate-400 text-sm">No tickets created yet</p>
+                    <p className="text-slate-500 text-xs">Click "Create" to add your first ticket</p>
+
                   </>
                 )}
               </div>
             ) : (
               filteredTickets.map((ticket) => (
-                <div key={ticket.id} className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors">
+                <div key={ticket.id} className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-slate-750 transition-colors">
                   <div className="col-span-4">
-                    <span className="text-sm text-gray-900">{ticket.title}</span>
+                    <span className="text-sm text-slate-100">{ticket.title}</span>
                     {ticket.description && (
-                      <p className="text-xs text-gray-500 mt-1">{ticket.description}</p>
+                      <p className="text-xs text-slate-400 mt-1">{ticket.description}</p>
                     )}
                     {ticket.category && (
-                      <p className="text-xs text-blue-500 mt-1">{ticket.category}</p>
+                      <p className="text-xs text-teal-400 mt-1">{ticket.category}</p>
                     )}
                   </div>
                   <div className="col-span-2">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      ticket.status === 'ON SALE' 
-                        ? 'bg-green-100 text-green-800' 
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${ticket.status === 'ON SALE'
+                        ? 'bg-emerald-800 text-emerald-200'
                         : ticket.status === 'Active'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-800'
-                    }`}>
+                          ? 'bg-teal-800 text-teal-200'
+                          : 'bg-slate-700 text-slate-300'
+
+                      }`}>
                       {ticket.status}
                     </span>
                   </div>
                   <div className="col-span-2">
-                    <span className="text-sm font-medium text-green-600">{ticket.price}</span>
+                    <span className="text-sm font-medium text-emerald-400">{ticket.price}</span>
                   </div>
                   <div className="col-span-3">
                     <div className="flex flex-col">
-                      <span className="text-sm text-gray-600">{ticket.quantitySold}</span>
+                      <span className="text-sm text-slate-300">{ticket.quantitySold}</span>
                       {ticket.quantityAvailable !== undefined && (
-                        <span className="text-xs text-gray-400">of {ticket.quantityAvailable}</span>
+                        <span className="text-xs text-slate-500">of {ticket.quantityAvailable}</span>
                       )}
+
                     </div>
                   </div>
                   <div className="col-span-1 flex justify-end gap-1 relative">
-                    <button 
+                    <button
                       onClick={() => handleEditClick(ticket.id)}
-                      className="p-1 hover:bg-gray-100 rounded transition-colors"
+                      className="p-1 hover:bg-slate-700 rounded transition-colors"
                       title="Edit ticket"
                     >
-                      <Edit className="w-4 h-4 text-gray-400 hover:text-blue-500" />
+                      <Edit className="w-4 h-4 text-slate-400 hover:text-teal-400" />
+
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleDeleteClick(ticket.id)}
-                      className="p-1 hover:bg-red-50 rounded transition-colors"
+                      className="p-1 hover:bg-red-900 rounded transition-colors"
                       title="Delete ticket"
                     >
-                      <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-500" />
+                      <Trash2 className="w-4 h-4 text-slate-400 hover:text-red-400" />
                     </button>
-                    <button 
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleMoreOptions(ticket.id);
                       }}
-                      className="p-1 hover:bg-gray-100 rounded transition-colors"
+                      className="p-1 hover:bg-slate-700 rounded transition-colors"
                       title="More options"
                     >
-                      <MoreHorizontal className="w-4 h-4 text-gray-400" />
+                      <MoreHorizontal className="w-4 h-4 text-slate-400" />
                     </button>
-                    
+
                     {/* More Options Dropdown */}
                     {showMoreOptions === ticket.id && (
-                      <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[120px]">
+                      <div className="absolute right-0 top-8 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-10 min-w-[120px]">
                         <div className="py-1">
+
                           <button
                             onClick={() => handleEditClick(ticket.id)}
-                            className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
-                          >
+
+                            className="w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 flex items-center gap-2"                          >
                             <Edit className="w-3 h-3" />
                             Edit
                           </button>
                           <button
                             onClick={() => handleDeleteClick(ticket.id)}
-                            className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                            className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-red-900 flex items-center gap-2"
                           >
                             <Trash2 className="w-3 h-3" />
                             Delete
@@ -249,22 +258,22 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
 
         {/* Delete Confirmation Modal */}
         {showDeleteConfirm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Delete Ticket</h3>
-              <p className="text-gray-600 mb-6">
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div className="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4 border border-slate-700">
+              <h3 className="text-lg font-medium text-slate-100 mb-4">Delete Ticket</h3>
+              <p className="text-slate-300 mb-6">
                 Are you sure you want to delete this ticket? This action cannot be undone.
               </p>
               <div className="flex justify-end gap-3">
                 <button
                   onClick={cancelDelete}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="px-4 py-2 text-slate-300 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                 >
                   Delete
                 </button>
@@ -280,7 +289,7 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
 
 // Renamed to avoid conflict with AddTicketsProps for Add_tickets
 interface AddTicketsContainerProps {
-    onNavigate: (page: string) => void;
+  onNavigate: (page: string) => void;
 }
 // Main App Component
 const AddTicketsContainer: React.FC<AddTicketsContainerProps> = ({ onNavigate }) => {
@@ -331,7 +340,7 @@ const AddTicketsContainer: React.FC<AddTicketsContainerProps> = ({ onNavigate })
   };
 
   const handleDeleteTicket = (ticketId: string | number) => {
-    setTickets(prevTickets => 
+    setTickets(prevTickets =>
       prevTickets.filter(ticket => ticket.id !== ticketId)
     );
   };
@@ -343,7 +352,7 @@ const AddTicketsContainer: React.FC<AddTicketsContainerProps> = ({ onNavigate })
 
   if (currentView === 'create') {
     return (
-      <CreateProduct 
+      <CreateProduct
         onBack={handleBackToTickets}
         onProductCreated={handleProductCreated}
       />
@@ -351,7 +360,7 @@ const AddTicketsContainer: React.FC<AddTicketsContainerProps> = ({ onNavigate })
   }
 
   return (
-    <Add_tickets 
+    <Add_tickets
       tickets={tickets}
       onCreateClick={handleCreateClick}
       onDeleteTicket={handleDeleteTicket}

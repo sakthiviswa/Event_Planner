@@ -131,8 +131,8 @@ const EventManagementSystem = () => {
 
   const handleSaveSettings = () => {
     if (selectedEvent) {
-      const updatedEvents = events.map(event => 
-        event.id === selectedEvent.id 
+      const updatedEvents = events.map(event =>
+        event.id === selectedEvent.id
           ? { ...event, name: settingsForm.name, venue: settingsForm.venueName }
           : event
       );
@@ -153,14 +153,14 @@ const EventManagementSystem = () => {
       <div className="relative z-10 w-full max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <button 
+          <button
             onClick={() => setCurrentView('list')}
             className="flex items-center text-white hover:text-blue-100 transition-colors"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
             <span className="text-lg font-medium">Create New Event</span>
           </button>
-          <button 
+          <button
             onClick={() => setCurrentView('list')}
             className="text-white hover:text-blue-100 transition-colors"
           >
@@ -178,7 +178,7 @@ const EventManagementSystem = () => {
             <input
               type="text"
               value={createForm.eventName}
-              onChange={(e) => setCreateForm({...createForm, eventName: e.target.value})}
+              onChange={(e) => setCreateForm({ ...createForm, eventName: e.target.value })}
               className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-800 font-medium"
               placeholder="Enter your event name"
             />
@@ -193,12 +193,11 @@ const EventManagementSystem = () => {
               {eventTypes.map((type) => (
                 <button
                   key={type.id}
-                  onClick={() => setCreateForm({...createForm, selectedEventType: type.label})}
-                  className={`flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                    createForm.selectedEventType === type.label
+                  onClick={() => setCreateForm({ ...createForm, selectedEventType: type.label })}
+                  className={`flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${createForm.selectedEventType === type.label
                       ? 'bg-blue-500 text-white shadow-lg shadow-blue-200'
                       : 'bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-600'
-                  }`}
+                    }`}
                 >
                   {type.icon}
                   <span className="ml-2">{type.label}</span>
@@ -216,7 +215,7 @@ const EventManagementSystem = () => {
               <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <select
                 value={createForm.selectedVenue}
-                onChange={(e) => setCreateForm({...createForm, selectedVenue: e.target.value})}
+                onChange={(e) => setCreateForm({ ...createForm, selectedVenue: e.target.value })}
                 className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-800 font-medium appearance-none bg-white"
               >
                 {venues.map((venue, index) => (
@@ -231,7 +230,7 @@ const EventManagementSystem = () => {
             <label className="block text-gray-700 font-semibold text-lg">
               Select the event & time
             </label>
-            
+
             {/* Time Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="space-y-2">
@@ -241,7 +240,7 @@ const EventManagementSystem = () => {
                   <input
                     type="date"
                     value={createForm.startDate}
-                    onChange={(e) => setCreateForm({...createForm, startDate: e.target.value})}
+                    onChange={(e) => setCreateForm({ ...createForm, startDate: e.target.value })}
                     className="w-full pl-10 pr-3 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-800 font-medium"
                   />
                 </div>
@@ -254,7 +253,7 @@ const EventManagementSystem = () => {
                   <input
                     type="text"
                     value={createForm.duration}
-                    onChange={(e) => setCreateForm({...createForm, duration: e.target.value})}
+                    onChange={(e) => setCreateForm({ ...createForm, duration: e.target.value })}
                     className="w-full pl-10 pr-3 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-800 font-medium"
                     placeholder="e.g. 2 hours"
                   />
@@ -266,7 +265,7 @@ const EventManagementSystem = () => {
                 <input
                   type="time"
                   value={createForm.startTime}
-                  onChange={(e) => setCreateForm({...createForm, startTime: e.target.value})}
+                  onChange={(e) => setCreateForm({ ...createForm, startTime: e.target.value })}
                   className="w-full px-3 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-800 font-medium"
                 />
               </div>
@@ -276,7 +275,7 @@ const EventManagementSystem = () => {
                 <input
                   type="time"
                   value={createForm.endTime}
-                  onChange={(e) => setCreateForm({...createForm, endTime: e.target.value})}
+                  onChange={(e) => setCreateForm({ ...createForm, endTime: e.target.value })}
                   className="w-full px-3 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-gray-800 font-medium"
                 />
               </div>
@@ -286,7 +285,7 @@ const EventManagementSystem = () => {
 
         {/* Action Buttons */}
         <div className="flex justify-between items-center mt-8">
-          <button 
+          <button
             onClick={() => setCurrentView('list')}
             className="px-6 py-3 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200 backdrop-blur-sm"
           >
@@ -324,13 +323,12 @@ const EventManagementSystem = () => {
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-semibold text-gray-900 line-clamp-2">{event.name}</h3>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    event.status === 'upcoming' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${event.status === 'upcoming' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}>
                     {event.status}
                   </span>
                 </div>
-                
+
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center text-gray-600">
                     <Users className="w-4 h-4 mr-2" />
@@ -372,14 +370,14 @@ const EventManagementSystem = () => {
       <div className="space-y-6">
         <div>
           <p className="text-sm text-gray-600 mb-4">Specify event name, description and dates</p>
-          
+
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
               <input
                 type="text"
                 value={settingsForm.name}
-                onChange={(e) => setSettingsForm({...settingsForm, name: e.target.value})}
+                onChange={(e) => setSettingsForm({ ...settingsForm, name: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
@@ -388,7 +386,7 @@ const EventManagementSystem = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
               <textarea
                 value={settingsForm.description}
-                onChange={(e) => setSettingsForm({...settingsForm, description: e.target.value})}
+                onChange={(e) => setSettingsForm({ ...settingsForm, description: e.target.value })}
                 rows={4}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
               />
@@ -400,7 +398,7 @@ const EventManagementSystem = () => {
                 <input
                   type="datetime-local"
                   value={settingsForm.startDate}
-                  onChange={(e) => setSettingsForm({...settingsForm, startDate: e.target.value})}
+                  onChange={(e) => setSettingsForm({ ...settingsForm, startDate: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
@@ -409,7 +407,7 @@ const EventManagementSystem = () => {
                 <input
                   type="datetime-local"
                   value={settingsForm.endDate}
-                  onChange={(e) => setSettingsForm({...settingsForm, endDate: e.target.value})}
+                  onChange={(e) => setSettingsForm({ ...settingsForm, endDate: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
@@ -423,13 +421,13 @@ const EventManagementSystem = () => {
       <div className="space-y-6">
         <div>
           <p className="text-sm text-gray-600 mb-4">Event location & venue details</p>
-          
+
           <div className="mb-4">
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={settingsForm.isOnlineEvent}
-                onChange={(e) => setSettingsForm({...settingsForm, isOnlineEvent: e.target.checked})}
+                onChange={(e) => setSettingsForm({ ...settingsForm, isOnlineEvent: e.target.checked })}
                 className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
               />
               <span className="text-sm text-gray-700">This is an online event</span>
@@ -442,7 +440,7 @@ const EventManagementSystem = () => {
               <input
                 type="text"
                 value={settingsForm.venueName}
-                onChange={(e) => setSettingsForm({...settingsForm, venueName: e.target.value})}
+                onChange={(e) => setSettingsForm({ ...settingsForm, venueName: e.target.value })}
                 disabled={settingsForm.isOnlineEvent}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
               />
@@ -457,14 +455,14 @@ const EventManagementSystem = () => {
         <div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Email & Notification Settings</h3>
           <p className="text-sm text-gray-600 mb-6">Customize the email and notification settings for this event</p>
-          
+
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Support Email</label>
               <input
                 type="email"
                 value={settingsForm.supportEmail}
-                onChange={(e) => setSettingsForm({...settingsForm, supportEmail: e.target.value})}
+                onChange={(e) => setSettingsForm({ ...settingsForm, supportEmail: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
@@ -473,7 +471,7 @@ const EventManagementSystem = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">Email footer message</label>
               <textarea
                 value={settingsForm.emailFooterMessage}
-                onChange={(e) => setSettingsForm({...settingsForm, emailFooterMessage: e.target.value})}
+                onChange={(e) => setSettingsForm({ ...settingsForm, emailFooterMessage: e.target.value })}
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
               />
@@ -528,12 +526,11 @@ const EventManagementSystem = () => {
                   return (
                     <button
                       key={tab.name}
-                      onClick={() => setSettingsForm({...settingsForm, activeTab: tab.name})}
-                      className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm font-medium rounded-md transition-colors ${
-                        settingsForm.activeTab === tab.name
+                      onClick={() => setSettingsForm({ ...settingsForm, activeTab: tab.name })}
+                      className={`w-full flex items-center gap-3 px-3 py-2 text-left text-sm font-medium rounded-md transition-colors ${settingsForm.activeTab === tab.name
                           ? 'bg-purple-100 text-purple-700 border-r-2 border-purple-600'
                           : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                      }`}
+                        }`}
                     >
                       <Icon className="w-4 h-4" />
                       {tab.name}
