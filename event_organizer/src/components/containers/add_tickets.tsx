@@ -277,8 +277,13 @@ const Add_tickets: React.FC<AddTicketsProps> = ({
   );
 };
 
+
+// Renamed to avoid conflict with AddTicketsProps for Add_tickets
+interface AddTicketsContainerProps {
+    onNavigate: (page: string) => void;
+}
 // Main App Component
-const TicketsApp = () => {
+const AddTicketsContainer: React.FC<AddTicketsContainerProps> = ({ onNavigate }) => {
   const [currentView, setCurrentView] = useState<'tickets' | 'create'>('tickets');
   const [tickets, setTickets] = useState<TicketType[]>([
     {
@@ -355,4 +360,4 @@ const TicketsApp = () => {
   );
 };
 
-export default TicketsApp;
+export default AddTicketsContainer;

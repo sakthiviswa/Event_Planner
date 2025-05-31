@@ -1,8 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import { ArrowLeft, Calendar, Clock, MapPin, Users, Music, BookOpen, Mail, Settings, Edit3, Save, X } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, MapPin, Users, Music, BookOpen, Mail, Settings as SettingsIcon, Edit3, Save, X } from 'lucide-react';
 
-const EventManagementSystem = () => {
+interface SettingsProps {
+    onNavigate: (page: string) => void;
+}
+
+const Settings: React.FC<SettingsProps> = ({ onNavigate }) => {
   const [currentView, setCurrentView] = useState('list'); // 'create', 'list', 'settings'
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const [events, setEvents] = useState([
@@ -351,7 +355,7 @@ const EventManagementSystem = () => {
                     onClick={() => handleEditEvent(event)}
                     className="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                   >
-                    <Settings className="w-4 h-4" />
+                    <SettingsIcon className="w-4 h-4" />
                     Settings
                   </button>
                   <button className="flex-1 bg-gray-50 hover:bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
@@ -570,4 +574,4 @@ const EventManagementSystem = () => {
   return renderCurrentView();
 };
 
-export default EventManagementSystem;
+export default Settings;

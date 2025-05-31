@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, Users, Repeat, Edit, Trash2, Eye, Plus, TrendingUp } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
-const EventDashboard = () => {
+interface DashboardProps {
+  onNavigate?: (page: string) => void;
+}
+
+const EventDashboard : React.FC<DashboardProps> = ({ onNavigate }) => {
   // Sample event data - in a real app, this would come from your state management or API
   const [events, setEvents] = useState([
     {
