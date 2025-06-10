@@ -1,14 +1,93 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Star, Users, Shield, Zap, MessageCircle, Facebook, Twitter, Linkedin, Instagram, Calendar, Clock, MapPin, CreditCard } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const EventTicketingLanding = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('venues');
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [stats, setStats] = useState([
+    { icon: <Calendar className="w-6 h-6" />, value: "10K+", label: "Events Created" },
+    { icon: <Users className="w-6 h-6" />, value: "500K+", label: "Tickets Sold" },
+    { icon: <MapPin className="w-6 h-6" />, value: "50+", label: "Cities" },
+    { icon: <CreditCard className="w-6 h-6" />, value: "2.5%", label: "Processing Fee" }
+  ]);
+  const router = useRouter();
 
   useEffect(() => {
     setIsVisible(true);
+    fetchStats();
   }, []);
+
+  const getIconComponent = (iconName: string) => {
+    switch (iconName) {
+      case 'Calendar':
+        return <Calendar className="w-6 h-6" />;
+      case 'Users':
+        return <Users className="w-6 h-6" />;
+      case 'MapPin':
+        return <MapPin className="w-6 h-6" />;
+      case 'CreditCard':
+        return <CreditCard className="w-6 h-6" />;
+      default:
+        return <Calendar className="w-6 h-6" />;
+    }
+  };
+
+  const fetchStats = async () => {
+    try {
+      const response = await axios.get('/api/stats');
+      if (response.data) {
+        const formattedStats = response.data.map((stat: any) => ({
+          ...stat,
+          icon: getIconComponent(stat.icon)
+        }));
+        setStats(formattedStats);
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+      // Keep using default stats if API call fails
+    }
+  };
+
+  const handleCreateEvent = async () => {
+    setIsLoading(true);
+    try {
+      // Check if user is authenticated
+      const response = await axios.get('/api/auth/check');
+      if (response.data.authenticated) {
+        router.push('/create-event');
+      } else {
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('Error checking authentication:', error);
+      router.push('/login');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleNewsletterSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    try {
+      await axios.post('/api/newsletter/subscribe', { email });
+      alert('Successfully subscribed to newsletter!');
+      setEmail('');
+    } catch (error) {
+      console.error('Error subscribing to newsletter:', error);
+      alert('Failed to subscribe. Please try again.');
+    }
+  };
+
+  const tologin = () => {
+    router.push('/login');
+  };
 
   const features = [
     {
@@ -35,13 +114,6 @@ const EventTicketingLanding = () => {
       subtitle: "Cloud Version",
       color: "from-purple-400 to-pink-500"
     }
-  ];
-
-  const stats = [
-    { icon: <Calendar className="w-6 h-6" />, value: "10K+", label: "Events Created" },
-    { icon: <Users className="w-6 h-6" />, value: "500K+", label: "Tickets Sold" },
-    { icon: <MapPin className="w-6 h-6" />, value: "50+", label: "Cities" },
-    { icon: <CreditCard className="w-6 h-6" />, value: "2.5%", label: "Processing Fee" }
   ];
 
   const footerSections = {
@@ -78,7 +150,8 @@ const EventTicketingLanding = () => {
           <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium">Documentation</a>
           <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium">Pricing</a>
           <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium">GitHub</a>
-          <button className="bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-3 rounded-full hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25 font-semibold">
+          <button className="bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-3 rounded-full hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25 font-semibold"
+          onClick={tologin}>
             Login
           </button>
         </nav>
@@ -112,11 +185,27 @@ const EventTicketingLanding = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-            <button className="bg-gradient-to-r from-cyan-500 to-blue-600 px-10 py-4 rounded-full text-lg font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-cyan-500/25">
-              Create Your Event Now
-              <ChevronRight className="inline w-5 h-5 ml-2" />
+            <button 
+              onClick={handleCreateEvent}
+              disabled={isLoading}
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 px-10 py-4 rounded-full text-lg font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <div className="flex items-center">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  Loading...
+                </div>
+              ) : (
+                <>
+                  Create Your Event Now
+                  <ChevronRight className="inline w-5 h-5 ml-2" />
+                </>
+              )}
             </button>
-            <button className="border-2 border-cyan-400/50 px-10 py-4 rounded-full text-lg font-semibold hover:border-cyan-400 hover:bg-cyan-400/10 transition-all duration-300 text-cyan-300">
+            <button 
+              onClick={() => window.open('https://github.com/your-repo', '_blank')}
+              className="border-2 border-cyan-400/50 px-10 py-4 rounded-full text-lg font-semibold hover:border-cyan-400 hover:bg-cyan-400/10 transition-all duration-300 text-cyan-300"
+            >
               Deploy Open Source
               <ChevronRight className="inline w-5 h-5 ml-2" />
             </button>
@@ -188,11 +277,27 @@ const EventTicketingLanding = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
-            <button className="bg-gradient-to-r from-cyan-500 to-purple-600 px-10 py-4 rounded-full text-lg font-semibold hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-cyan-500/25">
-              Create Event Now
-              <ChevronRight className="inline w-5 h-5 ml-2" />
+            <button 
+              onClick={handleCreateEvent}
+              disabled={isLoading}
+              className="bg-gradient-to-r from-cyan-500 to-purple-600 px-10 py-4 rounded-full text-lg font-semibold hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <div className="flex items-center">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  Loading...
+                </div>
+              ) : (
+                <>
+                  Create Event Now
+                  <ChevronRight className="inline w-5 h-5 ml-2" />
+                </>
+              )}
             </button>
-            <button className="border-2 border-gray-600 px-10 py-4 rounded-full text-lg font-semibold hover:border-cyan-400 hover:bg-cyan-400/10 transition-all duration-300 text-gray-300 hover:text-cyan-300">
+            <button 
+              onClick={() => window.open('/docs', '_blank')}
+              className="border-2 border-gray-600 px-10 py-4 rounded-full text-lg font-semibold hover:border-cyan-400 hover:bg-cyan-400/10 transition-all duration-300 text-gray-300 hover:text-cyan-300"
+            >
               View Documentation
               <ChevronRight className="inline w-5 h-5 ml-2" />
             </button>
@@ -284,17 +389,26 @@ const EventTicketingLanding = () => {
               <p className="text-gray-400 text-sm mb-6 leading-relaxed">
                 Subscribe to get the latest updates and exclusive features
               </p>
-              <div className="space-y-4">
+              <form onSubmit={handleNewsletterSubscribe} className="space-y-4">
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400 transition-colors"
+                  required
                 />
-                <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 rounded-lg text-sm font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+                <button 
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 rounded-lg text-sm font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105"
+                >
                   Subscribe
                 </button>
-              </div>
-              <button className="mt-6 bg-gradient-to-r from-green-500 to-teal-500 px-6 py-3 rounded-full text-sm font-semibold hover:from-green-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 flex items-center w-full justify-center">
+              </form>
+              <button 
+                onClick={() => window.open('/chat', '_blank')}
+                className="mt-6 bg-gradient-to-r from-green-500 to-teal-500 px-6 py-3 rounded-full text-sm font-semibold hover:from-green-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 flex items-center w-full justify-center"
+              >
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Live Chat
               </button>
