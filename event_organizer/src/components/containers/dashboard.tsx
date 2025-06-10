@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, Users, Repeat, Edit, Trash2, Eye, Plus, TrendingUp, Search, Filter } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+
+
 
 interface DashboardProps {
   onNavigate?: (page: string) => void;
@@ -160,10 +161,7 @@ const EventDashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 </button>
               </div>
 
-              <button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-200 shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105">
-                <Plus className="w-5 h-5" />
-                Create New Event
-              </button>
+             
             </div>
           </div>
         </div>
@@ -219,65 +217,7 @@ const EventDashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Profit Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Monthly Profit Trend */}
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700/50 p-6">
-            <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
-              Monthly Profit Trend
-            </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={monthlyProfitData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="month" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip content={<CustomTooltip />} />
-                <Line
-                  type="monotone"
-                  dataKey="profit"
-                  stroke="#10b981"
-                  strokeWidth={3}
-                  dot={{ fill: '#10b981', strokeWidth: 2, r: 6 }}
-                  activeDot={{ r: 8, stroke: '#10b981', strokeWidth: 2, fill: '#065f46' }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="#06b6d4"
-                  strokeWidth={2}
-                  dot={{ fill: '#06b6d4', strokeWidth: 2, r: 4 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="cost"
-                  stroke="#ef4444"
-                  strokeWidth={2}
-                  dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Event-wise Profit Comparison */}
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700/50 p-6">
-            <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              Event Profit Comparison
-            </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={eventProfitData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="name" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="profit" fill="#10b981" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="revenue" fill="#06b6d4" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="cost" fill="#ef4444" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+       
 
         {/* Events List */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700/50">
