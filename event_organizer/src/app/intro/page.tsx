@@ -1,10 +1,16 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Star, Users, Shield, Zap, MessageCircle, Facebook, Twitter, Linkedin, Instagram, Calendar, Clock, MapPin, CreditCard } from 'lucide-react';
-
+import { useRouter } from 'next/navigation';
 const EventTicketingLanding = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('venues');
+  const router=useRouter();
+
+
+  const tologin=()=>{
+    router.push('/login');
+  }
 
   useEffect(() => {
     setIsVisible(true);
@@ -78,7 +84,8 @@ const EventTicketingLanding = () => {
           <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium">Documentation</a>
           <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium">Pricing</a>
           <a href="#" className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium">GitHub</a>
-          <button className="bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-3 rounded-full hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25 font-semibold">
+          <button className="bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-3 rounded-full hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/25 font-semibold"
+          onClick={tologin}>
             Login
           </button>
         </nav>
